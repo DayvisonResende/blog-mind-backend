@@ -25,6 +25,8 @@ model User {
   articles     Article[]
   comments     Comment[]
   articleLikes ArticleLike[]
+  commentLikes CommentLike[]
+  savedArticles ArticleSave[]
 
   @@map("users")
 }
@@ -52,6 +54,7 @@ model Article {
   comments Comment[]
   likes    ArticleLike[]
   tags     ArticleTag[]
+  saves    ArticleSave[]
 
   @@index([authorId])
   @@index([category])
@@ -89,12 +92,52 @@ model Comment {
   authorId  String   @map("author_id")
   createdAt DateTime @default(now()) @map("created_at")
 
-  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
-  author  User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  article Article       @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  author  User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likes   CommentLike[]
 
   @@index([articleId])
   @@index([authorId])
   @@map("comments")
+}
+
+/// Curtida de um usuario em um comentario. Restricao unica por par.
+model CommentLike {
+  id        String   @id @default(uuid())
+  commentId String   @map("comment_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, userId])
+  @@index([userId])
+  @@map("comment_likes")
+}
+
+/// Artigo salvo (bookmark) por um usuario. Restricao unica por par.
+model ArticleSave {
+  id        String   @id @default(uuid())
+  articleId String   @map("article_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, userId])
+  @@index([userId])
+  @@map("article_saves")
+}
+
+/// Inscricao na newsletter (captura de e-mail da home).
+model NewsletterSubscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique @db.VarChar(160)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("newsletter_subscribers")
 }
 
 /// Curtida de um usuario em um artigo. Restricao unica por par (artigo, usuario).

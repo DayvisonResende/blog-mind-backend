@@ -1,4 +1,5 @@
 import { ArticleRepository, articleRepository } from '../repositories/article.repository';
+import { ReactionRepository, reactionRepository } from '../repositories/reaction.repository';
 import { toArticleResponse, ArticleResponse } from '../dtos/article.response';
 import { CreateArticleInput, UpdateArticleInput, ListArticlesQuery } from '../dtos/article.dto';
 import { calculateReadingTime } from '../utils/readingTime';
@@ -15,12 +16,15 @@ interface PaginatedArticles {
  * calculo do tempo de leitura, upload da capa e estatisticas do dashboard.
  */
 export class ArticleService {
-  constructor(private readonly articles: ArticleRepository = articleRepository) {}
+  constructor(
+    private readonly articles: ArticleRepository = articleRepository,
+    private readonly reactions: ReactionRepository = reactionRepository,
+  ) {}
 
   async list(query: ListArticlesQuery): Promise<PaginatedArticles> {
     const { items, total } = await this.articles.list(query);
     return {
-      items: items.map(toArticleResponse),
+      items: items.map((a) => toArticleResponse(a)),
       meta: {
         page: query.page,
         limit: query.limit,
@@ -31,12 +35,20 @@ export class ArticleService {
   }
 
   /** Detalhe do artigo; incrementa as visualizacoes a cada acesso. */
-  async getByIdAndCountView(id: string): Promise<ArticleResponse> {
+  async getByIdAndCountView(id: string, currentUserId?: string): Promise<ArticleResponse> {
     const existing = await this.articles.findById(id);
     if (!existing) throw new AppError('Artigo nao encontrado', 404, 'ARTICLE_NOT_FOUND');
 
     await this.articles.incrementViews(id);
-    return toArticleResponse({ ...existing, views: existing.views + 1 });
+
+    const viewer = currentUserId
+      ? {
+          isLiked: await this.reactions.isArticleLikedBy(id, currentUserId),
+          isSaved: await this.reactions.isArticleSavedBy(id, currentUserId),
+        }
+      : {};
+
+    return toArticleResponse({ ...existing, views: existing.views + 1 }, viewer);
   }
 
   async create(
@@ -88,7 +100,7 @@ export class ArticleService {
 
   async listMine(authorId: string): Promise<ArticleResponse[]> {
     const items = await this.articles.listByAuthor(authorId);
-    return items.map(toArticleResponse);
+    return items.map((a) => toArticleResponse(a));
   }
 
   dashboardStats(authorId: string) {

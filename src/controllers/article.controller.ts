@@ -35,7 +35,7 @@ export class ArticleController {
   };
 
   getById = async (req: Request, res: Response): Promise<void> => {
-    res.json(await this.articles.getByIdAndCountView(this.articleId(req)));
+    res.json(await this.articles.getByIdAndCountView(this.articleId(req), req.user?.id));
   };
 
   create = async (req: Request, res: Response): Promise<void> => {

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { articleController } from '../controllers/article.controller';
 import { authenticate } from '../middlewares/authenticate';
+import { optionalAuth } from '../middlewares/optionalAuth';
 import { uploadCover } from '../middlewares/upload';
 
 const articleRoutes = Router();
@@ -13,8 +14,8 @@ articleRoutes.get('/categories', articleController.categories);
 articleRoutes.get('/users/me/articles', authenticate, articleController.mine);
 articleRoutes.get('/dashboard/stats', authenticate, articleController.dashboardStats);
 
-// Detalhe publico (incrementa views)
-articleRoutes.get('/articles/:id', articleController.getById);
+// Detalhe publico (incrementa views); optionalAuth traz isLiked/isSaved se logado
+articleRoutes.get('/articles/:id', optionalAuth, articleController.getById);
 
 // Escrita (protegida; multipart com a capa)
 articleRoutes.post('/articles', authenticate, uploadCover, articleController.create);

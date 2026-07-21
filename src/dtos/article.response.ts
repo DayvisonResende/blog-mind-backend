@@ -34,10 +34,22 @@ export interface ArticleResponse {
   author: ArticleAuthor;
   createdAt: Date;
   updatedAt: Date;
+  /** Estado personalizado para o usuario logado (via optionalAuth). */
+  isLiked: boolean;
+  isSaved: boolean;
+}
+
+/** Estado de reacao do usuario atual, injetado no detalhe do artigo. */
+export interface ViewerState {
+  isLiked?: boolean;
+  isSaved?: boolean;
 }
 
 /** Converte o artigo do Prisma no formato de resposta da API. */
-export function toArticleResponse(article: ArticleWithRelations): ArticleResponse {
+export function toArticleResponse(
+  article: ArticleWithRelations,
+  viewer: ViewerState = {},
+): ArticleResponse {
   return {
     id: article.id,
     title: article.title,
@@ -53,5 +65,7 @@ export function toArticleResponse(article: ArticleWithRelations): ArticleRespons
     author: article.author,
     createdAt: article.createdAt,
     updatedAt: article.updatedAt,
+    isLiked: viewer.isLiked ?? false,
+    isSaved: viewer.isSaved ?? false,
   };
 }
