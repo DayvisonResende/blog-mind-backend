@@ -25,5 +25,5 @@ pnpm-debug.log*
 .idea/
 .DS_Store
 
-# Prisma — o schema.prisma É versionado; ignore apenas artefatos locais se houver
-# node_modules/.prisma é coberto por node_modules/
+# Prisma — o schema.prisma e as migrations SÃO versionados;
+# o client gerado fica em node_modules (ja ignorado)

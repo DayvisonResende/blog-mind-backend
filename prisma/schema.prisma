@@ -1,0 +1,90 @@
+// Schema do banco de dados - Blog Mind
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// Usuario do blog. Pode autor de artigos e comentarios.
+model User {
+  id        String   @id @default(uuid())
+  name      String   @db.VarChar(120)
+  email     String   @unique @db.VarChar(160)
+  password  String   @db.VarChar(255)
+  avatar    String?  @db.VarChar(500)
+  bio       String?  @db.VarChar(500)
+  role      Role     @default(user)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  articles     Article[]
+  comments     Comment[]
+  articleLikes ArticleLike[]
+
+  @@map("users")
+}
+
+enum Role {
+  user
+  admin
+}
+
+/// Artigo do blog, escrito por um usuario autor.
+model Article {
+  id          String   @id @default(uuid())
+  title       String   @db.VarChar(200)
+  summary     String   @db.VarChar(120)
+  content     String   @db.LongText
+  coverImage  String?  @map("cover_image") @db.VarChar(500)
+  category    String   @db.VarChar(80)
+  readingTime Int      @default(0) @map("reading_time")
+  views       Int      @default(0)
+  authorId    String   @map("author_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  author   User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments Comment[]
+  likes    ArticleLike[]
+
+  @@index([authorId])
+  @@index([category])
+  @@index([createdAt])
+  @@map("articles")
+}
+
+/// Comentario de um usuario em um artigo.
+model Comment {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  articleId String   @map("article_id")
+  authorId  String   @map("author_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  author  User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([articleId])
+  @@index([authorId])
+  @@map("comments")
+}
+
+/// Curtida de um usuario em um artigo. Restricao unica por par (artigo, usuario).
+model ArticleLike {
+  id        String   @id @default(uuid())
+  articleId String   @map("article_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, userId])
+  @@index([userId])
+  @@map("article_likes")
+}
