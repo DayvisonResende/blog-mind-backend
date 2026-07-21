@@ -1,0 +1,29 @@
+# dependências
+node_modules/
+
+# build
+dist/
+build/
+
+# ambiente (NUNCA versionar)
+.env
+.env.local
+.env.*.local
+
+# uploads de imagens (armazenamento local da capa)
+uploads/
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# editor / SO
+.vscode/
+.idea/
+.DS_Store
+
+# Prisma — o schema.prisma É versionado; ignore apenas artefatos locais se houver
+# node_modules/.prisma é coberto por node_modules/
