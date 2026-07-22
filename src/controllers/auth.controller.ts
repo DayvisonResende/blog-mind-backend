@@ -25,7 +25,7 @@ export class AuthController {
 
   me = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
-      throw new AppError('Nao autenticado', 401, 'UNAUTHORIZED');
+      throw new AppError('Não autenticado', 401, 'UNAUTHORIZED');
     }
     const user = await this.users.getById(req.user.id);
     res.status(200).json(user);

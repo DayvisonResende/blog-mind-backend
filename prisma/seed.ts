@@ -13,87 +13,87 @@ function body(title: string, paragraphs: string[]): string {
 
 const artigos = [
   {
-    title: 'O Futuro da Inteligencia Artificial em 2025',
-    summary: 'Tendencias e inovacoes que estao moldando o futuro da IA.',
-    category: 'Inteligencia Artificial',
+    title: 'O Futuro da Inteligência Artificial em 2025',
+    summary: 'Tendências e inovações que estão moldando o futuro da IA.',
+    category: 'Inteligência Artificial',
     tags: ['IA', 'Machine Learning', 'Futuro'],
     views: 342,
-    content: body('O Futuro da Inteligencia Artificial em 2025', [
-      'A inteligencia artificial continua a evoluir em um ritmo acelerado. Neste artigo, vamos explorar as principais tendencias e inovacoes que estao moldando o futuro da IA.',
-      'Os modelos de linguagem estao se tornando cada vez mais sofisticados, capazes de entender e gerar texto com precisao impressionante.',
-      'Com o avanco da IA, questoes eticas se tornam cada vez mais importantes. E crucial desenvolver sistemas responsaveis e transparentes.',
+    content: body('O Futuro da Inteligência Artificial em 2025', [
+      'A inteligência artificial continua a evoluir em um ritmo acelerado. Neste artigo, vamos explorar as principais tendências e inovações que estão moldando o futuro da IA.',
+      'Os modelos de linguagem estão se tornando cada vez mais sofisticados, capazes de entender e gerar texto com precisão impressionante.',
+      'Com o avanço da IA, questões éticas se tornam cada vez mais importantes. É crucial desenvolver sistemas responsáveis e transparentes.',
     ]),
   },
   {
-    title: 'Boas praticas de Desenvolvimento Web',
-    summary: 'Pilares para construir aplicacoes web modernas e sustentaveis.',
+    title: 'Boas práticas de Desenvolvimento Web',
+    summary: 'Pilares para construir aplicações web modernas e sustentáveis.',
     category: 'Desenvolvimento web',
-    tags: ['Frontend', 'Boas praticas', 'Performance'],
+    tags: ['Frontend', 'Boas práticas', 'Performance'],
     views: 187,
-    content: body('Boas praticas de Desenvolvimento Web', [
-      'Construir aplicacoes web modernas exige atencao a performance, acessibilidade e experiencia do usuario.',
-      'Divida a interface em componentes reutilizaveis. Isso reduz duplicacao e facilita a manutencao.',
-      'Usar TypeScript ajuda a prevenir uma classe inteira de bugs em tempo de compilacao.',
+    content: body('Boas práticas de Desenvolvimento Web', [
+      'Construir aplicações web modernas exige atenção a performance, acessibilidade e experiência do usuário.',
+      'Divida a interface em componentes reutilizáveis. Isso reduz duplicação e facilita a manutenção.',
+      'Usar TypeScript ajuda a prevenir uma classe inteira de bugs em tempo de compilação.',
     ]),
   },
   {
-    title: 'Introducao ao TypeScript para quem vem do JavaScript',
-    summary: 'Como a tipagem estatica melhora a qualidade do seu codigo.',
+    title: 'Introdução ao TypeScript para quem vem do JavaScript',
+    summary: 'Como a tipagem estática melhora a qualidade do seu código.',
     category: 'Desenvolvimento web',
     tags: ['TypeScript', 'JavaScript'],
     views: 254,
-    content: body('Introducao ao TypeScript', [
-      'TypeScript adiciona tipagem estatica ao JavaScript, ajudando a detectar erros antes mesmo de rodar o codigo.',
-      'Comece tipando funcoes e interfaces. Aos poucos o compilador vira seu maior aliado.',
-      'Ferramentas como o strict mode elevam ainda mais a seguranca do seu codigo.',
+    content: body('Introdução ao TypeScript', [
+      'TypeScript adiciona tipagem estática ao JavaScript, ajudando a detectar erros antes mesmo de rodar o código.',
+      'Comece tipando funções e interfaces. Aos poucos o compilador vira seu maior aliado.',
+      'Ferramentas como o strict mode elevam ainda mais a segurança do seu código.',
     ]),
   },
   {
-    title: 'Docker na pratica: containerizando sua aplicacao',
+    title: 'Docker na prática: containerizando sua aplicação',
     summary: 'Do zero ao primeiro container rodando em minutos.',
     category: 'DevOps',
     tags: ['Docker', 'DevOps', 'Containers'],
     views: 421,
-    content: body('Docker na pratica', [
-      'Containers empacotam sua aplicacao e suas dependencias, garantindo que ela rode igual em qualquer ambiente.',
-      'Um Dockerfile bem escrito e o primeiro passo para um deploy reproduzivel.',
-      'Com docker-compose, voce sobe banco de dados e aplicacao com um unico comando.',
+    content: body('Docker na prática', [
+      'Containers empacotam sua aplicação e suas dependências, garantindo que ela rode igual em qualquer ambiente.',
+      'Um Dockerfile bem escrito é o primeiro passo para um deploy reproduzível.',
+      'Com docker-compose, você sobe banco de dados e aplicação com um único comando.',
     ]),
   },
   {
     title: 'Construindo APIs REST com Node e Express',
-    summary: 'Arquitetura em camadas para APIs escalaveis e testaveis.',
+    summary: 'Arquitetura em camadas para APIs escaláveis e testáveis.',
     category: 'Backend',
     tags: ['Node', 'Express', 'API', 'Backend'],
     views: 298,
     content: body('Construindo APIs REST', [
-      'Separar a aplicacao em rotas, controllers, services e repositories deixa o codigo organizado e testavel.',
+      'Separar a aplicação em rotas, controllers, services e repositories deixa o código organizado e testável.',
       'Valide toda entrada e trate erros de forma centralizada para respostas consistentes.',
-      'Autenticacao com JWT e senhas com bcrypt sao o basico de seguranca que voce nao pode ignorar.',
+      'Autenticação com JWT e senhas com bcrypt são o básico de segurança que você não pode ignorar.',
     ]),
   },
   {
-    title: 'Prisma: o ORM que voce vai gostar de usar',
-    summary: 'Migracoes, tipagem forte e produtividade no acesso a dados.',
+    title: 'Prisma: o ORM que você vai gostar de usar',
+    summary: 'Migrações, tipagem forte e produtividade no acesso a dados.',
     category: 'Backend',
     tags: ['Prisma', 'ORM', 'Banco de dados'],
     views: 176,
     content: body('Prisma ORM', [
       'O Prisma gera um client totalmente tipado a partir do seu schema, reduzindo erros de runtime.',
-      'As migracoes versionadas contam a historia da evolucao do seu banco de dados.',
-      'Relacionamentos e queries complexas ficam legiveis e seguros.',
+      'As migrações versionadas contam a história da evolução do seu banco de dados.',
+      'Relacionamentos e queries complexas ficam legíveis e seguros.',
     ]),
   },
   {
     title: 'React Hooks: pensando em componentes',
-    summary: 'useState, useEffect e a arte de compor logica reutilizavel.',
+    summary: 'useState, useEffect e a arte de compor lógica reutilizável.',
     category: 'Frontend',
     tags: ['React', 'Hooks', 'Frontend'],
     views: 213,
     content: body('React Hooks', [
-      'Hooks permitem usar estado e efeitos em componentes de funcao, deixando o codigo mais direto.',
-      'Extraia logica repetida em hooks customizados para reutilizar entre telas.',
-      'Cuidado com as dependencias dos efeitos para evitar renders desnecessarios.',
+      'Hooks permitem usar estado e efeitos em componentes de função, deixando o código mais direto.',
+      'Extraia lógica repetida em hooks customizados para reutilizar entre telas.',
+      'Cuidado com as dependências dos efeitos para evitar renders desnecessários.',
     ]),
   },
 ];
@@ -118,7 +118,7 @@ async function main() {
 
   const john = await mk('John Doe', 'john@example.com', 'admin', 'Desenvolvedor Full Stack apaixonado por tecnologia.');
   const marie = await mk('Marie Smith', 'marie@example.com', 'user', 'Escritora de tecnologia e entusiasta de IA.');
-  const carlos = await mk('Carlos Souza', 'carlos@example.com', 'user', 'Engenheiro de software e fa de DevOps.');
+  const carlos = await mk('Carlos Souza', 'carlos@example.com', 'user', 'Engenheiro de software e fã de DevOps.');
   const ana = await mk('Ana Lima', 'ana@example.com', 'user', 'Frontend developer e designer.');
 
   const authors = [john, john, carlos, carlos, marie, marie, ana];
@@ -150,10 +150,10 @@ async function main() {
   const [iaArticle] = created;
   const comentadores = [marie, carlos, ana];
   const textos = [
-    'Otimo artigo, muito esclarecedor!',
-    'Concordo com os pontos sobre etica.',
+    'Ótimo artigo, muito esclarecedor!',
+    'Concordo com os pontos sobre ética.',
     'Isso mudou minha forma de pensar sobre o tema.',
-    'Excelente conteudo, aguardo a continuacao!',
+    'Excelente conteúdo, aguardo a continuação!',
   ];
 
   // Comentarios distribuidos nos primeiros artigos.

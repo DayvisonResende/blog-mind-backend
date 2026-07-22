@@ -11,7 +11,7 @@ export function authenticate(req: Request, _res: Response, next: NextFunction): 
   const header = req.headers.authorization;
 
   if (!header || !header.startsWith('Bearer ')) {
-    throw new AppError('Token nao fornecido', 401, 'UNAUTHORIZED');
+    throw new AppError('Token não fornecido', 401, 'UNAUTHORIZED');
   }
 
   const token = header.slice(7).trim();
@@ -21,6 +21,6 @@ export function authenticate(req: Request, _res: Response, next: NextFunction): 
     req.user = { id: payload.sub, role: payload.role };
     next();
   } catch {
-    throw new AppError('Token invalido ou expirado', 401, 'INVALID_TOKEN');
+    throw new AppError('Token inválido ou expirado', 401, 'INVALID_TOKEN');
   }
 }

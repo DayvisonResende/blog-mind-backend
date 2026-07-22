@@ -27,10 +27,10 @@ const tagsSchema = z
   .transform((tags) => [...new Set(tags.map((t) => t.trim()).filter(Boolean))]);
 
 export const createArticleSchema = z.object({
-  title: z.string().trim().min(3, 'Titulo muito curto').max(200),
+  title: z.string().trim().min(3, 'Título muito curto').max(200),
   summary: z.string().trim().min(3, 'Resumo muito curto').max(120),
-  content: z.string().trim().min(1, 'Conteudo e obrigatorio'),
-  category: z.string().trim().min(1, 'Categoria e obrigatoria').max(80),
+  content: z.string().trim().min(1, 'Conteúdo é obrigatório'),
+  category: z.string().trim().min(1, 'Categoria é obrigatória').max(80),
   tags: tagsSchema.optional().default([]),
 });
 

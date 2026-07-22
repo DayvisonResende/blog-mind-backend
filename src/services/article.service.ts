@@ -37,7 +37,7 @@ export class ArticleService {
   /** Detalhe do artigo; incrementa as visualizacoes a cada acesso. */
   async getByIdAndCountView(id: string, currentUserId?: string): Promise<ArticleResponse> {
     const existing = await this.articles.findById(id);
-    if (!existing) throw new AppError('Artigo nao encontrado', 404, 'ARTICLE_NOT_FOUND');
+    if (!existing) throw new AppError('Artigo não encontrado', 404, 'ARTICLE_NOT_FOUND');
 
     await this.articles.incrementViews(id);
 
@@ -114,9 +114,9 @@ export class ArticleService {
   /** Garante que o artigo existe e pertence ao usuario; senao lanca 404/403. */
   private async assertOwner(id: string, userId: string) {
     const owner = await this.articles.findOwner(id);
-    if (!owner) throw new AppError('Artigo nao encontrado', 404, 'ARTICLE_NOT_FOUND');
+    if (!owner) throw new AppError('Artigo não encontrado', 404, 'ARTICLE_NOT_FOUND');
     if (owner.authorId !== userId) {
-      throw new AppError('Voce nao tem permissao para esta acao', 403, 'FORBIDDEN');
+      throw new AppError('Você não tem permissão para esta ação', 403, 'FORBIDDEN');
     }
     return owner;
   }

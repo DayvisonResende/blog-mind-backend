@@ -2,7 +2,7 @@ import { z } from 'zod';
 import type { Prisma } from '@prisma/client';
 
 export const createCommentSchema = z.object({
-  content: z.string().trim().min(1, 'Comentario nao pode ser vazio').max(1000),
+  content: z.string().trim().min(1, 'Comentário não pode ser vazio').max(1000),
 });
 
 export type CreateCommentInput = z.infer<typeof createCommentSchema>;

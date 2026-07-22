@@ -44,7 +44,7 @@ export class CommentService {
     await this.assertArticleExists(articleId);
 
     const content = sanitizeText(rawContent);
-    if (!content) throw new AppError('Comentario invalido', 422, 'INVALID_COMMENT');
+    if (!content) throw new AppError('Comentário inválido', 422, 'INVALID_COMMENT');
 
     const comment = await this.comments.create(articleId, authorId, content);
     return toCommentResponse(comment);
@@ -52,16 +52,16 @@ export class CommentService {
 
   async delete(id: string, userId: string): Promise<void> {
     const owner = await this.comments.findOwner(id);
-    if (!owner) throw new AppError('Comentario nao encontrado', 404, 'COMMENT_NOT_FOUND');
+    if (!owner) throw new AppError('Comentário não encontrado', 404, 'COMMENT_NOT_FOUND');
     if (owner.authorId !== userId) {
-      throw new AppError('Voce nao tem permissao para esta acao', 403, 'FORBIDDEN');
+      throw new AppError('Você não tem permissão para esta ação', 403, 'FORBIDDEN');
     }
     await this.comments.delete(id);
   }
 
   private async assertArticleExists(articleId: string): Promise<void> {
     const article = await this.articles.findOwner(articleId);
-    if (!article) throw new AppError('Artigo nao encontrado', 404, 'ARTICLE_NOT_FOUND');
+    if (!article) throw new AppError('Artigo não encontrado', 404, 'ARTICLE_NOT_FOUND');
   }
 }
 

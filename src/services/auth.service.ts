@@ -19,7 +19,7 @@ export class AuthService {
   async register(input: RegisterInput): Promise<AuthResult> {
     const existing = await this.users.findByEmail(input.email);
     if (existing) {
-      throw new AppError('E-mail ja cadastrado', 409, 'EMAIL_ALREADY_EXISTS');
+      throw new AppError('E-mail já cadastrado', 409, 'EMAIL_ALREADY_EXISTS');
     }
 
     const password = await hashPassword(input.password);
@@ -36,7 +36,7 @@ export class AuthService {
     const user = await this.users.findByEmail(input.email);
     // Mensagem generica de proposito: nao revela se o e-mail existe.
     if (!user || !(await comparePassword(input.password, user.password))) {
-      throw new AppError('Credenciais invalidas', 401, 'INVALID_CREDENTIALS');
+      throw new AppError('Credenciais inválidas', 401, 'INVALID_CREDENTIALS');
     }
 
     return { user: toUserResponse(user), token: this.tokenFor(user.id, user.role) };

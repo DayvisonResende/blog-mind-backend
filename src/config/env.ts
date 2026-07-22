@@ -10,15 +10,15 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().default(3333),
   CORS_ORIGIN: z.string().default('http://localhost:5173'),
-  DATABASE_URL: z.string().min(1, 'DATABASE_URL e obrigatoria'),
-  JWT_SECRET: z.string().min(1, 'JWT_SECRET e obrigatoria'),
+  DATABASE_URL: z.string().min(1, 'DATABASE_URL é obrigatória'),
+  JWT_SECRET: z.string().min(1, 'JWT_SECRET é obrigatória'),
   JWT_EXPIRES: z.string().default('1d'),
 });
 
 const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
-  console.error('❌ Variaveis de ambiente invalidas:');
+  console.error('❌ Variáveis de ambiente inválidas:');
   console.error(z.treeifyError(parsed.error));
   process.exit(1);
 }

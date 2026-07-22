@@ -26,13 +26,13 @@ export class ReactionService {
 
   async toggleCommentLike(commentId: string, userId: string) {
     const comment = await this.comments.findOwner(commentId);
-    if (!comment) throw new AppError('Comentario nao encontrado', 404, 'COMMENT_NOT_FOUND');
+    if (!comment) throw new AppError('Comentário não encontrado', 404, 'COMMENT_NOT_FOUND');
     return this.reactions.toggleCommentLike(commentId, userId);
   }
 
   private async assertArticleExists(articleId: string): Promise<void> {
     const article = await this.articles.findOwner(articleId);
-    if (!article) throw new AppError('Artigo nao encontrado', 404, 'ARTICLE_NOT_FOUND');
+    if (!article) throw new AppError('Artigo não encontrado', 404, 'ARTICLE_NOT_FOUND');
   }
 }
 

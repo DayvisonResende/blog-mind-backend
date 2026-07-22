@@ -22,7 +22,7 @@ export function errorHandler(err: unknown, _req: Request, res: Response, _next: 
   // Erros de validacao do Zod
   if (err instanceof ZodError) {
     res.status(422).json({
-      message: 'Dados invalidos',
+      message: 'Dados inválidos',
       code: 'VALIDATION_ERROR',
       issues: err.issues.map((i) => ({ path: i.path.join('.'), message: i.message })),
     });
@@ -43,7 +43,7 @@ export function errorHandler(err: unknown, _req: Request, res: Response, _next: 
  */
 export function notFoundHandler(req: Request, res: Response): void {
   res.status(404).json({
-    message: `Rota nao encontrada: ${req.method} ${req.originalUrl}`,
+    message: `Rota não encontrada: ${req.method} ${req.originalUrl}`,
     code: 'ROUTE_NOT_FOUND',
   });
 }

@@ -16,7 +16,7 @@ export class ReactionController {
   }
 
   private userId(req: Request): string {
-    if (!req.user) throw new AppError('Nao autenticado', 401, 'UNAUTHORIZED');
+    if (!req.user) throw new AppError('Não autenticado', 401, 'UNAUTHORIZED');
     return req.user.id;
   }
 
