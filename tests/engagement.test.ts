@@ -181,6 +181,32 @@ describe('Comentarios, curtidas, salvar e newsletter', () => {
     });
   });
 
+  describe('GET /dashboard/activity', () => {
+    it('lista comentarios recentes nos artigos do autor', async () => {
+      const autor = await createUser('autor@test.com');
+      const leitor = await createUser('leitor@test.com');
+      const articleId = await createArticle(autor.token);
+
+      await request(app)
+        .post(`/articles/${articleId}/comments`)
+        .set(auth(leitor.token))
+        .send({ content: 'Comentario do leitor' });
+
+      const res = await request(app).get('/dashboard/activity').set(auth(autor.token));
+
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveLength(1);
+      expect(res.body[0].content).toBe('Comentario do leitor');
+      expect(res.body[0].commenter.name).toBe('Usuario');
+      expect(res.body[0].article.id).toBe(articleId);
+    });
+
+    it('bloqueia sem token (401)', async () => {
+      const res = await request(app).get('/dashboard/activity');
+      expect(res.status).toBe(401);
+    });
+  });
+
   describe('Newsletter', () => {
     it('inscreve um e-mail novo (201)', async () => {
       const res = await request(app)

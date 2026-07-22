@@ -26,6 +26,19 @@ export class CommentRepository {
     return prisma.comment.delete({ where: { id } });
   }
 
+  /** Comentarios recentes feitos nos artigos de um autor (para o dashboard). */
+  recentForAuthorArticles(authorId: string, limit = 5) {
+    return prisma.comment.findMany({
+      where: { article: { authorId } },
+      include: {
+        author: { select: { name: true, avatar: true } },
+        article: { select: { id: true, title: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: limit,
+    });
+  }
+
   /** Ids (dentre os informados) que o usuario curtiu — define o campo `liked`. */
   async likedIdsForUser(userId: string, commentIds: string[]): Promise<Set<string>> {
     if (commentIds.length === 0) return new Set();

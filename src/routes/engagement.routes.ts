@@ -19,6 +19,9 @@ engagementRoutes.post(
 );
 engagementRoutes.delete('/comments/:id', authenticate, commentController.remove);
 
+// Atividade recente do dashboard (comentarios nos meus artigos)
+engagementRoutes.get('/dashboard/activity', authenticate, commentController.recentActivity);
+
 // Curtidas e salvar (toggle)
 engagementRoutes.post('/articles/:id/like', authenticate, reactionController.likeArticle);
 engagementRoutes.post('/articles/:id/save', authenticate, reactionController.saveArticle);

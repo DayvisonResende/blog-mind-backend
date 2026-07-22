@@ -21,6 +21,10 @@ export class CommentController {
     res.json(comments);
   };
 
+  recentActivity = async (req: Request, res: Response): Promise<void> => {
+    res.json(await this.comments.recentActivity(this.userId(req)));
+  };
+
   create = async (req: Request, res: Response): Promise<void> => {
     const { content } = createCommentSchema.parse(req.body);
     const comment = await this.comments.create(this.param(req, 'id'), this.userId(req), content);

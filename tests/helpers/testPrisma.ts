@@ -19,8 +19,11 @@ export const testPrisma = new PrismaClient({
 
 /** Apaga todos os dados do banco de teste, na ordem correta das FKs. */
 export async function resetTestDatabase() {
+  await testPrisma.commentLike.deleteMany();
   await testPrisma.articleLike.deleteMany();
+  await testPrisma.articleSave.deleteMany();
   await testPrisma.comment.deleteMany();
   await testPrisma.article.deleteMany();
   await testPrisma.user.deleteMany();
+  await testPrisma.newsletterSubscriber.deleteMany();
 }

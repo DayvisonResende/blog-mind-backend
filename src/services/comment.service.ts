@@ -14,6 +14,18 @@ export class CommentService {
     private readonly articles: ArticleRepository = articleRepository,
   ) {}
 
+  /** Atividade recente do dashboard: ultimos comentarios nos artigos do autor. */
+  async recentActivity(authorId: string) {
+    const comments = await this.comments.recentForAuthorArticles(authorId);
+    return comments.map((c) => ({
+      id: c.id,
+      content: c.content,
+      createdAt: c.createdAt,
+      commenter: { name: c.author.name, avatar: c.author.avatar },
+      article: { id: c.article.id, title: c.article.title },
+    }));
+  }
+
   async listByArticle(articleId: string, currentUserId?: string): Promise<CommentResponse[]> {
     await this.assertArticleExists(articleId);
     const items = await this.comments.listByArticle(articleId);
