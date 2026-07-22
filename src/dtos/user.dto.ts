@@ -1,12 +1,14 @@
 import { z } from 'zod';
 import type { User } from '@prisma/client';
 
-/** Validacao da atualizacao de perfil (todos os campos opcionais). */
+/**
+ * Validacao da atualizacao de perfil (campos de texto).
+ * A foto de perfil e enviada como arquivo (multipart) e tratada a parte.
+ */
 export const updateProfileSchema = z
   .object({
     name: z.string().trim().min(2).max(120).optional(),
     bio: z.string().max(500).nullable().optional(),
-    avatar: z.url('URL de avatar invalida').max(500).nullable().optional(),
   })
   .strict();
 

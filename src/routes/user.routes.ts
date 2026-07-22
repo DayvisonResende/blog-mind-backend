@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { userController } from '../controllers/user.controller';
-import { validateBody } from '../middlewares/validate';
 import { authenticate } from '../middlewares/authenticate';
-import { updateProfileSchema } from '../dtos/user.dto';
+import { uploadAvatar } from '../middlewares/upload';
 
 const userRoutes = Router();
 
-userRoutes.put('/users/me', authenticate, validateBody(updateProfileSchema), userController.updateMe);
+// Multipart: foto de perfil (campo "avatar") + campos de texto (name/bio).
+userRoutes.put('/users/me', authenticate, uploadAvatar, userController.updateMe);
 
 export { userRoutes };

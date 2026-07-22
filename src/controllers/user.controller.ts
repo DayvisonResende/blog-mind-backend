@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { UserService, userService } from '../services/user.service';
+import { updateProfileSchema } from '../dtos/user.dto';
 import { AppError } from '../utils/AppError';
 
 /**
@@ -10,9 +11,11 @@ export class UserController {
 
   updateMe = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
-      throw new AppError('Nao autenticado', 401, 'UNAUTHORIZED');
+      throw new AppError('Não autenticado', 401, 'UNAUTHORIZED');
     }
-    const user = await this.users.updateProfile(req.user.id, req.body);
+    // Body multipart: os campos de texto so existem apos o multer.
+    const input = updateProfileSchema.parse(req.body);
+    const user = await this.users.updateProfile(req.user.id, input, req.file?.buffer);
     res.status(200).json(user);
   };
 }
