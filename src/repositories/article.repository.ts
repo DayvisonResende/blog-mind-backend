@@ -20,12 +20,7 @@ interface CreateData {
   tags: string[];
 }
 
-/**
- * Camada de acesso a dados dos artigos.
- * Encapsula as queries do Prisma, incluindo a associacao N:N com tags.
- */
 export class ArticleRepository {
-  /** Monta o filtro de busca (titulo ou nome do autor) e categoria. */
   private buildWhere(search?: string, category?: string): Prisma.ArticleWhereInput {
     const where: Prisma.ArticleWhereInput = {};
     if (category) where.category = category;
@@ -60,7 +55,6 @@ export class ArticleRepository {
     return prisma.article.findUnique({ where: { id }, include: articleInclude });
   }
 
-  /** Retorna apenas o dono do artigo (para checagem de autorizacao). */
   findOwner(id: string): Promise<{ authorId: string; coverImage: string | null } | null> {
     return prisma.article.findUnique({
       where: { id },
@@ -93,7 +87,6 @@ export class ArticleRepository {
       where: { id },
       data: {
         ...rest,
-        // Se tags vierem, substitui o conjunto atual.
         ...(tags
           ? { tags: { deleteMany: {}, create: await this.connectTags(tags) } }
           : {}),
@@ -115,7 +108,6 @@ export class ArticleRepository {
     });
   }
 
-  /** Estatisticas agregadas dos artigos de um autor (para o dashboard). */
   async authorStats(authorId: string): Promise<{
     totalArticles: number;
     totalViews: number;
@@ -143,7 +135,6 @@ export class ArticleRepository {
     };
   }
 
-  /** Categorias distintas existentes (para o filtro da listagem). */
   async distinctCategories(): Promise<string[]> {
     const rows = await prisma.article.findMany({
       distinct: ['category'],
@@ -153,7 +144,6 @@ export class ArticleRepository {
     return rows.map((r) => r.category);
   }
 
-  /** Garante a existencia das tags (upsert) e devolve os vinculos para o N:N. */
   private async connectTags(tags: string[]): Promise<Prisma.ArticleTagCreateWithoutArticleInput[]> {
     const links = await Promise.all(
       tags.map(async (name) => {

@@ -5,11 +5,6 @@ import { userRoutes } from './user.routes';
 import { articleRoutes } from './article.routes';
 import { engagementRoutes } from './engagement.routes';
 
-/**
- * Agregador de rotas da API.
- * Cada modulo (auth, articles, comments...) registra suas rotas aqui
- * ao longo das proximas fases.
- */
 const routes = Router();
 
 routes.use(healthRoutes);

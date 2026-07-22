@@ -3,10 +3,6 @@ import {
   newsletterRepository,
 } from '../repositories/newsletter.repository';
 
-/**
- * Regra de negocio da newsletter: inscreve um e-mail de forma idempotente
- * (se ja inscrito, nao gera erro — apenas informa).
- */
 export class NewsletterService {
   constructor(private readonly newsletter: NewsletterRepository = newsletterRepository) {}
 

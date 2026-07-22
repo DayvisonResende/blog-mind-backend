@@ -7,10 +7,6 @@ import {
 } from '../dtos/article.dto';
 import { AppError } from '../utils/AppError';
 
-/**
- * Controller de artigos. A validacao dos corpos multipart acontece aqui
- * (apos o multer), pois os campos de texto so existem depois do parse.
- */
 export class ArticleController {
   constructor(private readonly articles: ArticleService = articleService) {}
 
@@ -19,7 +15,6 @@ export class ArticleController {
     return req.user.id;
   }
 
-  /** Le o parametro :id garantindo que seja uma string simples. */
   private articleId(req: Request): string {
     const { id } = req.params;
     return Array.isArray(id) ? id[0] : id;

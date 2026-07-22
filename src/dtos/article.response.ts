@@ -1,16 +1,11 @@
 import type { Prisma } from '@prisma/client';
 
-/**
- * Include padrao usado ao buscar artigos: traz o autor (dados publicos),
- * as tags e as contagens de curtidas e comentarios.
- */
 export const articleInclude = {
   author: { select: { id: true, name: true, avatar: true } },
   tags: { include: { tag: true } },
   _count: { select: { likes: true, comments: true } },
 } satisfies Prisma.ArticleInclude;
 
-/** Tipo do artigo do Prisma ja com o include acima aplicado. */
 export type ArticleWithRelations = Prisma.ArticleGetPayload<{ include: typeof articleInclude }>;
 
 export interface ArticleAuthor {
@@ -34,18 +29,15 @@ export interface ArticleResponse {
   author: ArticleAuthor;
   createdAt: Date;
   updatedAt: Date;
-  /** Estado personalizado para o usuario logado (via optionalAuth). */
   isLiked: boolean;
   isSaved: boolean;
 }
 
-/** Estado de reacao do usuario atual, injetado no detalhe do artigo. */
 export interface ViewerState {
   isLiked?: boolean;
   isSaved?: boolean;
 }
 
-/** Converte o artigo do Prisma no formato de resposta da API. */
 export function toArticleResponse(
   article: ArticleWithRelations,
   viewer: ViewerState = {},

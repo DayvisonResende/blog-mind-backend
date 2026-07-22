@@ -4,7 +4,6 @@ import { calculateReadingTime } from '../src/utils/readingTime';
 
 const prisma = new PrismaClient();
 
-/** Senha em texto puro usada por todos os usuarios de teste (documentada no README). */
 const SENHA_PADRAO = 'senha123';
 
 function body(title: string, paragraphs: string[]): string {
@@ -156,7 +155,6 @@ async function main() {
     'Excelente conteúdo, aguardo a continuação!',
   ];
 
-  // Comentarios distribuidos nos primeiros artigos.
   const comments = [];
   for (let i = 0; i < 4; i++) {
     const comment = await prisma.comment.create({
@@ -169,7 +167,6 @@ async function main() {
     comments.push(comment);
   }
 
-  // Curtidas em artigos (par unico artigo/usuario).
   const likers = [marie, carlos, ana, john];
   for (let i = 0; i < created.length; i++) {
     for (let j = 0; j <= i % 3; j++) {
@@ -179,16 +176,13 @@ async function main() {
     }
   }
 
-  // Curtidas em comentarios.
   await prisma.commentLike.create({ data: { commentId: comments[0].id, userId: john.id } });
   await prisma.commentLike.create({ data: { commentId: comments[0].id, userId: carlos.id } });
   await prisma.commentLike.create({ data: { commentId: comments[1].id, userId: ana.id } });
 
-  // Artigos salvos.
   await prisma.articleSave.create({ data: { articleId: iaArticle.id, userId: marie.id } });
   await prisma.articleSave.create({ data: { articleId: created[3].id, userId: john.id } });
 
-  // Inscricoes na newsletter.
   await prisma.newsletterSubscriber.createMany({
     data: [{ email: 'leitor1@example.com' }, { email: 'leitor2@example.com' }],
   });

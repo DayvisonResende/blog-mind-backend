@@ -3,10 +3,6 @@ import { AuthService, authService } from '../services/auth.service';
 import { userService, UserService } from '../services/user.service';
 import { AppError } from '../utils/AppError';
 
-/**
- * Controller de autenticacao. Metodos como arrow properties para
- * preservar o `this` quando passados como handlers de rota.
- */
 export class AuthController {
   constructor(
     private readonly auth: AuthService = authService,

@@ -1,10 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-/**
- * Instancia unica (singleton) do PrismaClient.
- * O guard em globalThis evita criar multiplas conexoes durante o
- * hot-reload do tsx em desenvolvimento.
- */
+// Singleton: o guard em globalThis evita novas conexoes no hot-reload do dev.
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
 export const prisma =

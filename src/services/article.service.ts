@@ -11,10 +11,6 @@ interface PaginatedArticles {
   meta: { page: number; limit: number; total: number; totalPages: number };
 }
 
-/**
- * Regras de negocio dos artigos: CRUD, autorizacao (so o autor edita/exclui),
- * calculo do tempo de leitura, upload da capa e estatisticas do dashboard.
- */
 export class ArticleService {
   constructor(
     private readonly articles: ArticleRepository = articleRepository,
@@ -34,7 +30,6 @@ export class ArticleService {
     };
   }
 
-  /** Detalhe do artigo; incrementa as visualizacoes a cada acesso. */
   async getByIdAndCountView(id: string, currentUserId?: string): Promise<ArticleResponse> {
     const existing = await this.articles.findById(id);
     if (!existing) throw new AppError('Artigo não encontrado', 404, 'ARTICLE_NOT_FOUND');
@@ -81,7 +76,7 @@ export class ArticleService {
     let coverImage: string | undefined;
     if (coverBuffer) {
       coverImage = await saveCoverImage(coverBuffer);
-      await deleteCoverImage(owner.coverImage); // remove a capa antiga
+      await deleteCoverImage(owner.coverImage);
     }
 
     const article = await this.articles.update(id, {
@@ -111,7 +106,6 @@ export class ArticleService {
     return this.articles.distinctCategories();
   }
 
-  /** Garante que o artigo existe e pertence ao usuario; senao lanca 404/403. */
   private async assertOwner(id: string, userId: string) {
     const owner = await this.articles.findOwner(id);
     if (!owner) throw new AppError('Artigo não encontrado', 404, 'ARTICLE_NOT_FOUND');

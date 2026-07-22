@@ -1,7 +1,4 @@
-/**
- * Estende o Request do Express para carregar o usuario autenticado,
- * injetado pelo middleware de autenticacao apos validar o JWT.
- */
+// Estende o Request do Express com o usuario autenticado (injetado pelo middleware de auth).
 declare global {
   namespace Express {
     interface UserPayload {

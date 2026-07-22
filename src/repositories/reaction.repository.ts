@@ -5,11 +5,6 @@ interface ToggleResult {
   count: number;
 }
 
-/**
- * Acesso a dados das reacoes (toggle): curtir artigo, curtir comentario e
- * salvar artigo. Cada operacao cria o vinculo se nao existir ou remove se
- * ja existir, respeitando a restricao unica por (alvo, usuario).
- */
 export class ReactionRepository {
   async toggleArticleLike(articleId: string, userId: string): Promise<ToggleResult> {
     const existing = await prisma.articleLike.findUnique({

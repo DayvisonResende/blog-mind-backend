@@ -2,11 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import { verifyToken } from '../utils/jwt';
 import { AppError } from '../utils/AppError';
 
-/**
- * Middleware de autenticacao: exige um JWT valido no header
- * `Authorization: Bearer <token>`, decodifica e injeta o usuario em req.user.
- * Bloqueia (401) qualquer requisicao sem token ou com token invalido/expirado.
- */
 export function authenticate(req: Request, _res: Response, next: NextFunction): void {
   const header = req.headers.authorization;
 

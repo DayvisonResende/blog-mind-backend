@@ -9,7 +9,6 @@ import { subscribeSchema } from '../dtos/newsletter.dto';
 
 const engagementRoutes = Router();
 
-// Comentarios
 engagementRoutes.get('/articles/:id/comments', optionalAuth, commentController.list);
 engagementRoutes.post(
   '/articles/:id/comments',
@@ -19,15 +18,12 @@ engagementRoutes.post(
 );
 engagementRoutes.delete('/comments/:id', authenticate, commentController.remove);
 
-// Atividade recente do dashboard (comentarios nos meus artigos)
 engagementRoutes.get('/dashboard/activity', authenticate, commentController.recentActivity);
 
-// Curtidas e salvar (toggle)
 engagementRoutes.post('/articles/:id/like', authenticate, reactionController.likeArticle);
 engagementRoutes.post('/articles/:id/save', authenticate, reactionController.saveArticle);
 engagementRoutes.post('/comments/:id/like', authenticate, reactionController.likeComment);
 
-// Newsletter
 engagementRoutes.post(
   '/newsletter/subscribe',
   validateBody(subscribeSchema),

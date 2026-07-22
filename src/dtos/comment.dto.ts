@@ -7,7 +7,6 @@ export const createCommentSchema = z.object({
 
 export type CreateCommentInput = z.infer<typeof createCommentSchema>;
 
-/** Include padrao ao buscar comentarios: autor + contagem de curtidas. */
 export const commentInclude = {
   author: { select: { id: true, name: true, avatar: true } },
   _count: { select: { likes: true } },
@@ -24,11 +23,6 @@ export interface CommentResponse {
   liked: boolean;
 }
 
-/**
- * Converte o comentario do Prisma na resposta da API.
- * `likedIds` e o conjunto de ids de comentarios curtidos pelo usuario atual
- * (vazio para visitantes) — define o campo `liked`.
- */
 export function toCommentResponse(
   comment: CommentWithRelations,
   likedIds: Set<string> = new Set(),

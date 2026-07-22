@@ -1,11 +1,7 @@
 import 'dotenv/config';
 import { z } from 'zod';
 
-/**
- * Valida e tipa as variaveis de ambiente na inicializacao.
- * Se algo obrigatorio estiver faltando, a aplicacao falha rapido
- * com uma mensagem clara, em vez de quebrar em runtime.
- */
+// Valida as variaveis de ambiente na inicializacao (falha rapido se faltar algo).
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().default(3333),

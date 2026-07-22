@@ -3,10 +3,6 @@ import { ArticleRepository, articleRepository } from '../repositories/article.re
 import { CommentRepository, commentRepository } from '../repositories/comment.repository';
 import { AppError } from '../utils/AppError';
 
-/**
- * Regras de negocio das reacoes (toggle): curtir artigo/comentario e salvar
- * artigo. Cada operacao valida a existencia do alvo antes de alternar.
- */
 export class ReactionService {
   constructor(
     private readonly reactions: ReactionRepository = reactionRepository,

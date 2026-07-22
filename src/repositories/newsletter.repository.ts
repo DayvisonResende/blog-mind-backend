@@ -1,6 +1,5 @@
 import { prisma } from '../config/prisma';
 
-/** Acesso a dados das inscricoes na newsletter. */
 export class NewsletterRepository {
   findByEmail(email: string) {
     return prisma.newsletterSubscriber.findUnique({ where: { email } });

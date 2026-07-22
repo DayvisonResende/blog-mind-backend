@@ -10,9 +10,6 @@ interface AuthResult {
   token: string;
 }
 
-/**
- * Regras de negocio de autenticacao: cadastro e login.
- */
 export class AuthService {
   constructor(private readonly users: UserRepository = userRepository) {}
 
@@ -34,7 +31,6 @@ export class AuthService {
 
   async login(input: LoginInput): Promise<AuthResult> {
     const user = await this.users.findByEmail(input.email);
-    // Mensagem generica de proposito: nao revela se o e-mail existe.
     if (!user || !(await comparePassword(input.password, user.password))) {
       throw new AppError('Credenciais inválidas', 401, 'INVALID_CREDENTIALS');
     }

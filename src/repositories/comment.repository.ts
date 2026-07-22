@@ -1,7 +1,6 @@
 import { prisma } from '../config/prisma';
 import { commentInclude, CommentWithRelations } from '../dtos/comment.dto';
 
-/** Acesso a dados dos comentarios. */
 export class CommentRepository {
   listByArticle(articleId: string): Promise<CommentWithRelations[]> {
     return prisma.comment.findMany({
@@ -26,7 +25,6 @@ export class CommentRepository {
     return prisma.comment.delete({ where: { id } });
   }
 
-  /** Comentarios recentes feitos nos artigos de um autor (para o dashboard). */
   recentForAuthorArticles(authorId: string, limit = 5) {
     return prisma.comment.findMany({
       where: { article: { authorId } },
@@ -39,7 +37,6 @@ export class CommentRepository {
     });
   }
 
-  /** Ids (dentre os informados) que o usuario curtiu — define o campo `liked`. */
   async likedIdsForUser(userId: string, commentIds: string[]): Promise<Set<string>> {
     if (commentIds.length === 0) return new Set();
     const rows = await prisma.commentLike.findMany({

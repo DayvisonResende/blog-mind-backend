@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { User } from '@prisma/client';
 
-/**
- * Validacao da atualizacao de perfil (campos de texto).
- * A foto de perfil e enviada como arquivo (multipart) e tratada a parte.
- */
+// A foto de perfil vem como arquivo (multipart), tratada a parte.
 export const updateProfileSchema = z
   .object({
     name: z.string().trim().min(2).max(120).optional(),
@@ -14,7 +11,6 @@ export const updateProfileSchema = z
 
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
 
-/** Formato seguro do usuario retornado pela API (sem a senha). */
 export interface UserResponse {
   id: string;
   name: string;
@@ -26,10 +22,7 @@ export interface UserResponse {
   updatedAt: Date;
 }
 
-/**
- * Response DTO: converte a entidade User em um objeto seguro,
- * removendo o campo `password` antes de enviar na resposta.
- */
+// Nunca expoe o campo password.
 export function toUserResponse(user: User): UserResponse {
   return {
     id: user.id,

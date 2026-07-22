@@ -4,17 +4,12 @@ import { toCommentResponse, CommentResponse } from '../dtos/comment.dto';
 import { sanitizeText } from '../utils/sanitize';
 import { AppError } from '../utils/AppError';
 
-/**
- * Regras de negocio dos comentarios: listar (com estado de curtida do usuario),
- * criar (sanitizado contra XSS) e remover (apenas o autor).
- */
 export class CommentService {
   constructor(
     private readonly comments: CommentRepository = commentRepository,
     private readonly articles: ArticleRepository = articleRepository,
   ) {}
 
-  /** Atividade recente do dashboard: ultimos comentarios nos artigos do autor. */
   async recentActivity(authorId: string) {
     const comments = await this.comments.recentForAuthorArticles(authorId);
     return comments.map((c) => ({
